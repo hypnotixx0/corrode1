@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+    <div class="grid-canvas"></div>
+    <div class="luminous-aura"></div>
+
+    <!-- Announcement Modal -->
+    <div class="announcement-modal" id="announcementModal">
+        <div class="announcement-content">
+            <h2 class="announcement-title">Welcome to Corrode</h2>
+            <div class="announcement-message">
+                <p>Your private browsing experience just got better! Explore the web freely with our secure proxy service.</p>
+                <p style="margin-top: 1rem;"><strong>New Features:</strong></p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Enhanced privacy protection</li>
+                    <li>Faster browsing speeds</li>
+                    <li>Game library with direct play</li>
+                    <li>Custom bookmarks</li>
+                </ul>
+            </div>
+            <div class="announcement-footer">
+                <div class="announcement-credits">
+                    <span>Made with ❤️ by unhiin</span>
+                    <img 
+                        src="assests/pfp.jpg" 
+                        alt="Profile" 
+                        onerror="this.style.display='none'; this.parentElement.querySelector('span').innerHTML='Made with ❤️ by unhiin';"
+                    >
+                </div>
+                <button class="announcement-close" id="closeAnnouncement">Get Started</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="central-container">
+        <div class="emblem">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-ghost"></i>
+            </div>
+            <h1 class="title">Corrode</h1>
+        </div>
+
+        <div class="search-module">
+            <div class="search-glyph">
+                <i class="fas fa-search"></i>
+            </div>
+            <input 
+                type="text" 
+                class="search-field" 
+                placeholder="Search or enter address" 
+                id="searchInput"
+            >
+            <div class="settings-capsule" id="settingsBtn">
+                <i class="fas fa-sliders-h"></i>
+            </div>
+        </div>
+
+        <!-- Games Counter -->
+        <div class="games-counter" id="gamesCounter">
+            <span class="games-counter-number" id="gamesCount">0</span> Games Available
+        </div>
+
+        <div class="tile-collection" id="tileCollection">
+            <!-- Tiles will be loaded by JavaScript -->
+        </div>
+
+        <footer class="footer-cluster">
+            <a href="#" class="footer-link"><i class="fab fa-discord"></i></a>
+            <a href="settings.html" class="footer-link" title="Settings"><i class="fas fa-cog"></i></a>
+            <a href="#" class="footer-link"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="footer-link"><i class="fa-solid fa-people-group"></i></a>
+            <a href="#" class="footer-link"><i class="fas fa-handshake"></i></a>
+        </footer>
+    </main>
+
+    <script src="home.js"></script>
+    <script src="theme-engine.js"></script>
+</body>
+</html>

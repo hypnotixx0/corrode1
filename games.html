@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrode | Games</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="games.css">
+    <link rel="stylesheet" href="game-player.css">
+</head>
+<body class="home-page">
+    <div class="grid-canvas"></div>
+    <div class="luminous-aura"></div>
+    
+    <main class="central-container">
+        <!-- Centered Games Icon -->
+        <div class="centered-icon-wrapper">
+            <i class="fas fa-gamepad"></i>
+        </div>
+        
+        <div class="games-header">
+            <h1 class="games-title">External Games</h1>
+            <p class="games-subtitle">Powered by gn-math • Click any game to play</p>
+        </div>
+        
+        <!-- Games Counter -->
+        <div class="games-counter" id="gamesCounter">
+            <span class="games-counter-number" id="gamesCount">0</span> Games Available
+        </div>
+        
+        <div class="search-module">
+            <div class="search-glyph" onclick="searchGames()">
+                <i class="fas fa-search"></i>
+            </div>
+            <input type="text" class="search-field" id="gameSearch" placeholder="Search games..." autocomplete="off">
+            <div class="settings-capsule" onclick="window.location.href='index.html'">
+                <i class="fas fa-home"></i>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="quick-action-btn" onclick="filterGames('all')">
+                <i class="fas fa-gamepad"></i> All Games
+            </button>
+            <button class="quick-action-btn" onclick="testAllGames()">
+                <i class="fas fa-check-circle"></i> Show Game Info
+            </button>
+            <button class="quick-action-btn" onclick="window.location.href='proxy.html'">
+                <i class="fas fa-compass"></i> Browse More
+            </button>
+        </div>
+        
+        <!-- Category Filters (Will be populated by JavaScript) -->
+        <div class="games-controls">
+            <button class="category-filter all active" onclick="filterGames('all')">All Games</button>
+            <!-- Categories will be added here -->
+        </div>
+        
+        <!-- Games Grid -->
+        <div class="games-grid" id="gamesGrid">
+            <!-- Games will load here -->
+        </div>
+        
+        <footer class="footer-cluster">
+            <a href="index.html" class="footer-link" title="Home"><i class="fas fa-home"></i></a>
+            <a href="proxy.html" class="footer-link" title="Browser"><i class="fas fa-compass"></i></a>
+            <a href="settings.html" class="footer-link" title="Settings"><i class="fas fa-cog"></i></a>
+        </footer>
+    </main>
+    
+    <!-- Load game player FIRST -->
+    <script src="game-player.js"></script>
+    
+    <!-- Then load games.js -->
+    <script src="games.js"></script>
+    
+    <!-- Debug and initialization script -->
+    <script>
+        console.log('Games page loaded - initializing...');
+        
+        // Ensure game player is ready
+        function ensureGamePlayerReady() {
+            console.log('Checking game player status...');
+            
+            // Check if GamePlayer class exists
+            if (typeof GamePlayer === 'undefined') {
+                console.error('GamePlayer class not found! Make sure game-player.js is loaded.');
+                return false;
+            }
+            
+            // Check if global gamePlayer instance exists
+            if (typeof window.gamePlayer === 'undefined') {
+                console.log('Creating new GamePlayer instance...');
+                try {
+                    window.gamePlayer = new GamePlayer();
+                    console.log('GamePlayer instance created successfully');
+                } catch (error) {
+                    console.error('Failed to create GamePlayer:', error);
+                    return false;
+                }
+            }
+            
+            // Ensure launchGame function exists
+            if (typeof window.launchGame === 'undefined') {
+                console.log('Creating launchGame function...');
+                window.launchGame = function(game) {
+                    console.log('launchGame called with:', game);
+                    
+                    if (window.gamePlayer && typeof window.gamePlayer.show === 'function') {
+                        // Format game data for player
+                        const gameData = {
+                            name: game.name || 'Game',
+                            author: game.author || 'Unknown',
+                            localPath: game.url || game.localPath,
+                            type: game.type || 'external'
+                        };
+                        window.gamePlayer.show(gameData);
+                        return true;
+                    } else {
+                        console.error('gamePlayer.show not available');
+                        alert('Game player not ready. Please refresh the page.');
+                        return false;
+                    }
+                };
+                console.log('launchGame function created');
+            }
+            
+            console.log('Game player is ready!');
+            console.log('- gamePlayer:', typeof window.gamePlayer);
+            console.log('- launchGame:', typeof window.launchGame);
+            console.log('- GamePlayer class:', typeof GamePlayer);
+            
+            return true;
+        }
+        
+        // Test game player when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, ensuring game player...');
+            
+            // Give scripts time to load
+            setTimeout(() => {
+                const isReady = ensureGamePlayerReady();
+                
+                if (isReady) {
+                    console.log('✅ Game player system ready!');
+                    
+                    // Optional: Add a test button for debugging
+                    const testBtn = document.createElement('button');
+                    testBtn.innerHTML = '<i class="fas fa-vial"></i> Test Player';
+                    testBtn.style.cssText = `
+                        position: fixed;
+                        bottom: 100px;
+                        right: 20px;
+                        padding: 10px 15px;
+                        background: var(--dusk);
+                        border: 1px solid var(--shadow);
+                        border-radius: 10px;
+                        color: var(--pearl);
+                        cursor: pointer;
+                        z-index: 9999;
+                        font-size: 0.9rem;
+                    `;
+                    testBtn.onclick = () => {
+                        if (window.launchGame) {
+                            const testGame = {
+                                name: 'Test Game',
+                                author: 'Test Author',
+                                url: 'https://example.com',
+                                type: 'test'
+                            };
+                            window.launchGame(testGame);
+                        }
+                    };
+                    document.body.appendChild(testBtn);
+                } else {
+                    console.error('❌ Game player system failed to initialize');
+                    alert('Game player failed to load. Please refresh the page.');
+                }
+            }, 1000);
+        });
+        
+        // Expose functions to global scope for onclick handlers
+        window.filterGames = function(category) {
+            if (window.gamesUI && window.gamesUI.filterGames) {
+                window.gamesUI.filterGames(category);
+            }
+        };
+        
+        window.searchGames = function() {
+            if (window.gamesUI && window.gamesUI.searchGames) {
+                window.gamesUI.searchGames();
+            }
+        };
+        
+        window.testAllGames = function() {
+            if (window.gamesUI && window.gamesUI.testAllGames) {
+                window.gamesUI.testAllGames();
+            }
+        };
+        
+        window.addCustomGame = function() {
+            if (window.gamesUI && window.gamesUI.addCustomGame) {
+                window.gamesUI.addCustomGame();
+            }
+        };
+    </script>
+    <script src="theme-engine.js"></script>
+</body>
+</html>

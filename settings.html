@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrode | Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body class="home-page">
+    <div class="grid-canvas"></div>
+    <div class="luminous-aura"></div>
+    
+    <main class="central-container">
+        <!-- Settings Header -->
+        <div class="settings-header">
+            <div class="settings-title-section">
+                <div class="settings-icon-wrapper">
+                    <i class="fas fa-cog fa-spin"></i>
+                </div>
+                <div class="settings-title-content">
+                    <h1 class="settings-main-title">Settings</h1>
+                    <p class="settings-subtitle">Customize your Corrode experience</p>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="settings-stats">
+                <div class="stat-item">
+                    <i class="fas fa-palette"></i>
+                    <span class="stat-label">Theme</span>
+                    <span class="stat-value" id="currentTheme">Dark</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span class="stat-label">Cloak</span>
+                    <span class="stat-value" id="currentCloak">None</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-gamepad"></i>
+                    <span class="stat-label">Games</span>
+                    <span class="stat-value" id="gamesCountStat">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Navigation Grid - 4 boxes side by side -->
+        <div class="quick-nav-grid">
+            <button class="nav-card" onclick="window.location.href='index.html'">
+                <div class="nav-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="nav-info">
+                    <h3>Home</h3>
+                    <p>Return to dashboard</p>
+                </div>
+            </button>
+            
+            <button class="nav-card" onclick="window.location.href='games.html'">
+                <div class="nav-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="nav-info">
+                    <h3>Games</h3>
+                    <p>Browse game library</p>
+                </div>
+            </button>
+            
+            <button class="nav-card" onclick="window.location.href='proxy.html'">
+                <div class="nav-icon">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <div class="nav-info">
+                    <h3>Browser</h3>
+                    <p>Browse the web</p>
+                </div>
+            </button>
+            
+            <button class="nav-card" onclick="window.location.reload()">
+                <div class="nav-icon">
+                    <i class="fas fa-redo"></i>
+                </div>
+                <div class="nav-info">
+                    <h3>Refresh</h3>
+                    <p>Reload settings</p>
+                </div>
+            </button>
+        </div>
+        
+        <!-- Settings Container -->
+        <div class="settings-container">
+            <!-- Cloaking Section - AT THE TOP -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-mask"></i>
+                    Cloaking
+                </h2>
+                
+                <div class="settings-grid">
+                    <!-- Quick Cloak Buttons - NO DROPDOWN -->
+                    <div class="setting-card action-setting full-width">
+                        <div class="setting-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Quick Cloak</h3>
+                            <p>Apply cloaking immediately</p>
+                        </div>
+                        <div class="cloak-buttons-container">
+                            <button class="cloak-action-btn" data-cloak="none">
+                                <i class="fas fa-times-circle"></i> Remove Cloak
+                            </button>
+                            <button class="cloak-action-btn" data-cloak="blob">
+                                <i class="fas fa-shield-alt"></i> Blob Cloak
+                            </button>
+                            <button class="cloak-action-btn" data-cloak="about-blank">
+                                <i class="fas fa-eye-slash"></i> About:Blank
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Auto Cloak Settings -->
+                    <div class="setting-card toggle-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Auto Blob Cloak</h3>
+                            <p>Automatically cloak site with blob URL on page load</p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="autoBlobCloak">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card toggle-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Auto About:Blank Cloak</h3>
+                            <p>Automatically cloak site with about:blank on page load</p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="autoAboutBlankCloak">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Cloaking Section -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-window-maximize"></i>
+                    Tab Cloaking
+                </h2>
+                
+                <div class="settings-grid">
+                    <div class="setting-card input-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-heading"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Tab Title</h3>
+                            <p>Custom tab title for browser</p>
+                        </div>
+                        <div class="setting-control">
+                            <input type="text" class="text-input" id="tabTitleInput" placeholder="Enter custom title...">
+                            <button class="action-btn" id="setTabTitle">
+                                <i class="fas fa-check"></i> Set
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card input-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Tab Icon</h3>
+                            <p>Custom favicon URL</p>
+                        </div>
+                        <div class="setting-control">
+                            <input type="text" class="text-input" id="tabIconInput" placeholder="Enter icon URL...">
+                            <button class="action-btn" id="setTabIcon">
+                                <i class="fas fa-check"></i> Set
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Presets - UNDER TAB CLOAKING -->
+                    <div class="setting-card action-setting full-width">
+                        <div class="setting-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Quick Presets</h3>
+                            <p>Popular site presets for tab cloaking</p>
+                        </div>
+                        <div class="cloak-presets-container">
+                            <div class="cloak-presets" id="cloakPresets">
+                                <!-- Presets will be added by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card action-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Reset Tab Cloak</h3>
+                            <p>Restore default tab title and icon</p>
+                        </div>
+                        <button class="action-btn danger" id="resetTabCloak">
+                            <i class="fas fa-trash"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme Section -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-palette"></i>
+                    Theme
+                </h2>
+                <div class="settings-grid">
+                    <div class="setting-card theme-selector" data-theme="dark">
+                        <div class="theme-preview theme-dark"></div>
+                        <div class="setting-info">
+                            <h3>Dark</h3>
+                            <p>Default dark theme</p>
+                        </div>
+                        <div class="setting-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card theme-selector" data-theme="blue">
+                        <div class="theme-preview theme-blue"></div>
+                        <div class="setting-info">
+                            <h3>Blue</h3>
+                            <p>Cool blue theme</p>
+                        </div>
+                        <div class="setting-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card theme-selector" data-theme="purple">
+                        <div class="theme-preview theme-purple"></div>
+                        <div class="setting-info">
+                            <h3>Purple</h3>
+                            <p>Deep purple theme</p>
+                        </div>
+                        <div class="setting-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card theme-selector" data-theme="green">
+                        <div class="theme-preview theme-green"></div>
+                        <div class="setting-info">
+                            <h3>Green</h3>
+                            <p>Forest green theme</p>
+                        </div>
+                        <div class="setting-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card theme-selector" data-theme="red">
+                        <div class="theme-preview theme-red"></div>
+                        <div class="setting-info">
+                            <h3>Red</h3>
+                            <p>Crimson red theme</p>
+                        </div>
+                        <div class="setting-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interface Section -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-desktop"></i>
+                    Interface
+                </h2>
+                
+                <div class="settings-grid">
+                    <div class="setting-card toggle-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Enable Animations</h3>
+                            <p>Show page animations and transitions</p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="enableAnimations">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card toggle-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-compress"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Compact Mode</h3>
+                            <p>Use compact interface layout</p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="compactMode">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card toggle-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Show Games Counter</h3>
+                            <p>Display games count on home page</p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="showGamesCounter">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card toggle-setting">
+                        <div class="setting-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="setting-info">
+                            <h3>Show Announcement</h3>
+                            <p>Show welcome announcement on first visit</p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="announcementEnabled">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-tools"></i>
+                    Actions
+                </h2>
+                
+                <div class="action-buttons">
+                    <button class="action-btn large" id="saveSettings">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                    <button class="action-btn large primary" id="applySettings">
+                        <i class="fas fa-bolt"></i> Apply Now
+                    </button>
+                    <button class="action-btn large danger" id="resetSettings">
+                        <i class="fas fa-redo"></i> Reset to Defaults
+                    </button>
+                </div>
+                
+                <div class="setting-status" id="settingStatus">
+                    Settings will be saved automatically
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer-cluster">
+            <a href="index.html" class="footer-link" title="Home"><i class="fas fa-home"></i></a>
+            <a href="games.html" class="footer-link" title="Games"><i class="fas fa-gamepad"></i></a>
+            <a href="proxy.html" class="footer-link" title="Proxy"><i class="fas fa-compass"></i></a>
+            <a href="#" class="footer-link" title="Refresh" onclick="location.reload()"><i class="fas fa-redo"></i></a>
+        </footer>
+    </main>
+    
+    <!-- Load settings system -->
+    <script src="settings-core.js"></script>
+    <!-- Load theme engine -->
+    <script src="theme-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+/* game-player.css - UPDATED WITH THEME SUPPORT */
+.game-player-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--void);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Apply theme classes to game player */
+.game-player-overlay.theme-dark {
+    background: #000000;
+}
+
+.game-player-overlay.theme-blue {
+    background: #000c1a;
+}
+
+.game-player-overlay.theme-purple {
+    background: #0a001a;
+}
+
+.game-player-overlay.theme-green {
+    background: #001a0a;
+}
+
+.game-player-overlay.theme-red {
+    background: #1a0000;
+}
+
+/* Game Content Area */
+.game-player-content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--void);
+}
+
+.game-frame-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.game-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--void);
+}
+
+/* Game Controls Bar - Theme Support */
+.game-controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.5rem;
+    background: var(--abyss);
+    border-top: 1px solid var(--shadow);
+    box-shadow: 0 -4px 20px var(--shadow-medium);
+    min-height: 70px;
+    transition: all 0.3s ease;
+}
+
+/* Theme-specific control bar colors */
+.game-player-overlay.theme-blue .game-controls-bar {
+    background: #0a1a2a;
+    border-top-color: #223a4a;
+}
+
+.game-player-overlay.theme-purple .game-controls-bar {
+    background: #1a0a2a;
+    border-top-color: #3a2a4a;
+}
+
+.game-player-overlay.theme-green .game-controls-bar {
+    background: #0a2a1a;
+    border-top-color: #2a4a3a;
+}
+
+.game-player-overlay.theme-red .game-controls-bar {
+    background: #2a0a0a;
+    border-top-color: #4a2a2a;
+}
+
+.game-info-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.game-name-display {
+    color: var(--frost);
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.game-author-display {
+    color: var(--dust);
+    font-size: 0.9rem;
+    font-style: italic;
+    transition: color 0.3s ease;
+}
+
+.game-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+/* Control Buttons - Theme Support */
+.game-control-btn {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--midnight);
+    border: 1px solid var(--shadow);
+    border-radius: 12px;
+    color: var(--pearl);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-control-btn:hover {
+    background: var(--dusk);
+    border-color: var(--stone);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.game-control-btn:active {
+    transform: translateY(0);
+    transition: transform 100ms ease;
+}
+
+.game-control-btn.active {
+    background: var(--dusk);
+    border-color: var(--glow-visible);
+}
+
+/* Game Status - Theme Support */
+.game-status-indicator {
+    padding: 0.5rem 1rem;
+    background: var(--midnight);
+    border: 1px solid var(--shadow);
+    border-radius: 10px;
+    color: var(--frost);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.game-status-indicator.connected {
+    border-color: rgba(46, 204, 113, 0.3);
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.1);
+}
+
+.game-status-indicator.loading {
+    border-color: rgba(52, 152, 219, 0.3);
+    color: #3498db;
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.game-status-indicator.error {
+    border-color: rgba(231, 76, 60, 0.3);
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+/* FIXED: Only spin the icon, not the container */
+.game-status-indicator.loading .fa-sync {
+    animation: game-status-icon-spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes game-status-icon-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Loading Overlay - Theme Support */
+.game-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--abyss);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Loading animation for overlay */
+.game-loading-animation {
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--shadow);
+    border-top-color: var(--frost);
+    border-radius: 50%;
+    animation: game-loading-spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes game-loading-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+    color: var(--pearl);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.loading-details {
+    color: var(--dust);
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+/* Error Overlay - Theme Support */
+.game-error-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.game-player-overlay.theme-blue .game-error-overlay {
+    background: rgba(10, 26, 42, 0.95);
+}
+
+.game-player-overlay.theme-purple .game-error-overlay {
+    background: rgba(26, 10, 42, 0.95);
+}
+
+.game-player-overlay.theme-green .game-error-overlay {
+    background: rgba(10, 42, 26, 0.95);
+}
+
+.game-player-overlay.theme-red .game-error-overlay {
+    background: rgba(42, 10, 10, 0.95);
+}
+
+.error-icon {
+    font-size: 4rem;
+    color: var(--fog);
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.error-title {
+    font-size: 1.8rem;
+    color: var(--glacier);
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.error-message {
+    color: var(--dust);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 400px;
+    transition: color 0.3s ease;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.error-btn {
+    padding: 0.8rem 2rem;
+    border: 1px solid var(--shadow);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--midnight);
+    color: var(--pearl);
+}
+
+.error-btn:hover {
+    background: var(--dusk);
+    border-color: var(--stone);
+    transform: translateY(-2px);
+}
+
+.error-btn:active {
+    transform: translateY(0);
+}
+
+/* Fullscreen UI Hide Animation */
+.game-controls-bar.ui-hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.game-controls-bar.ui-visible {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Compact mode support */
+.compact-mode .game-controls-bar {
+    padding: 0.5rem 1rem;
+    min-height: 60px;
+}
+
+.compact-mode .game-control-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.compact-mode .game-name-display {
+    font-size: 1rem;
+}
+
+.compact-mode .game-status-indicator {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+/* Animation disable support */
+.no-animations .game-loading-animation {
+    animation: none;
+}
+
+.no-animations .game-status-indicator.loading .fa-sync {
+    animation: none;
+}
+
+.no-animations .game-control-btn:hover {
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-controls-bar {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .game-info-left {
+        flex: 1;
+        min-width: 100%;
+        order: 1;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+    
+    .game-controls-right {
+        flex: 1;
+        order: 2;
+        justify-content: flex-end;
+    }
+    
+    .game-name-display {
+        font-size: 1rem;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .game-control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* Dark theme enhancement */
+.game-player-overlay.theme-dark .game-control-btn:hover {
+    background: #444444;
+    border-color: #555555;
+}
+
+.game-player-overlay.theme-dark .game-status-indicator {
+    background: #222222;
+    border-color: #333333;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .game-control-btn {
+        border-width: 2px;
+    }
+    
+    .game-status-indicator {
+        border-width: 2px;
+    }
+}
