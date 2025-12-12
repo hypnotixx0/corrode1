@@ -1,4 +1,4 @@
-/* Games Page Styles */
+
 .games-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -21,7 +21,7 @@
     margin: 0 auto;
 }
 
-/* Centered Icon */
+
 .centered-icon-wrapper {
     width: 120px;
     height: 120px;
@@ -51,7 +51,7 @@
     color: var(--glacier);
 }
 
-/* Featured Section */
+
 .featured-section {
     grid-column: 1 / -1;
     margin-bottom: 3rem;
@@ -93,7 +93,7 @@
     letter-spacing: 0.05em;
 }
 
-/* Games Grid */
+
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -197,7 +197,7 @@
     font-style: italic;
 }
 
-/* Search and Filter */
+
 .games-controls {
     display: flex;
     gap: 1rem;
@@ -233,7 +233,7 @@
     border-color: var(--stone);
 }
 
-/* Game Status Badges */
+
 .game-status {
     position: absolute;
     top: 10px;
@@ -269,7 +269,7 @@
     border: 1px solid #9b59b6;
 }
 
-/* Game Details Tooltip */
+
 .game-tooltip {
     position: absolute;
     top: -70px;
@@ -306,7 +306,7 @@
     top: -80px;
 }
 
-/* Loading Animation */
+
 .loading {
     display: inline-block;
     width: 40px;
@@ -321,7 +321,7 @@
     to { transform: rotate(360deg); }
 }
 
-/* Empty State */
+
 .no-games {
     grid-column: 1 / -1;
     text-align: center;
@@ -335,7 +335,7 @@
     opacity: 0.5;
 }
 
-/* Upload Instructions */
+
 .upload-instructions {
     background: rgba(26, 26, 26, 0.5);
     border: 1px dashed var(--shadow);
@@ -356,7 +356,7 @@
     font-size: 0.95rem;
 }
 
-/* Quick Actions */
+
 .quick-actions {
     display: flex;
     gap: 1rem;
@@ -383,7 +383,7 @@
     transform: translateY(-2px);
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .games-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

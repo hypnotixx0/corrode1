@@ -1,4 +1,3 @@
-// Settings System Core - COMPLETE FIXED VERSION
 class SettingsManager {
     constructor() {
         this.storageKey = 'corrode_settings';
@@ -82,21 +81,17 @@ class SettingsManager {
             }
         ];
         
-        this.cloakApplied = false; // Track if cloak has been applied to prevent loops
+        this.cloakApplied = false;
         this.init();
     }
 
     init() {
         this.loadSettings();
-        this.applyAllSettings(); // Apply ALL settings immediately
+        this.applyAllSettings();
         this.setupUI();
         this.setupEventListeners();
         this.updateStats();
-        
-        // Check if we're already in a cloak to prevent loops
         this.checkCurrentCloak();
-        
-        // Auto-cloak if enabled (delayed to ensure page loads)
         setTimeout(() => this.autoCloak(), 1500);
     }
 
@@ -116,11 +111,7 @@ class SettingsManager {
         try {
             localStorage.setItem(this.storageKey, JSON.stringify(this.settings));
             this.showStatus('Settings saved!', 'success');
-            
-            // Update stats after saving
             this.updateStats();
-            
-            // Dispatch event for other pages to update theme
             window.dispatchEvent(new CustomEvent('settingsUpdated', { 
                 detail: this.settings 
             }));
@@ -131,73 +122,45 @@ class SettingsManager {
     }
 
     updateSetting(key, value) {
-        console.log(`Updating setting: ${key} = ${value}`);
         const oldValue = this.settings[key];
         this.settings[key] = value;
         this.saveSettings();
-        this.applyAllSettings(); // Apply ALL settings when one changes
-        
-        // Update UI
+        this.applyAllSettings();
         this.updateUI();
-        
-        // Special handling for cloak settings - only apply if changed
+
         if ((key === 'autoBlobCloak' || key === 'autoAboutBlankCloak') && oldValue !== value) {
             this.autoCloak();
         }
-        
-        // Special handling for announcement setting
+
         if (key === 'announcementEnabled') {
             this.handleAnnouncementSetting();
         }
-        
-        // Special handling for games counter
+
         if (key === 'showGamesCounter') {
-            this.applyGamesCounter(true); // Force update
+            this.applyGamesCounter(true);
         }
     }
 
     applyAllSettings() {
-        console.log('Applying all settings:', this.settings);
-        
-        // Apply theme globally
         this.applyTheme(this.settings.theme);
-        
-        // Apply tab cloaking
         this.applyTabCloak();
-        
-        // Apply animations globally
         this.applyAnimations();
-        
-        // Apply compact mode globally
         this.applyCompactMode();
-        
-        // Apply games counter setting
         this.applyGamesCounter(true);
-        
-        // Handle announcement
         this.handleAnnouncementSetting();
-        
-        // Update active cloak button
         this.updateActiveCloakButton();
     }
 
     applyTheme(theme) {
-        console.log('Applying theme:', theme);
-        
-        // Apply to body
         document.body.classList.remove(
             'theme-dark', 'theme-blue', 'theme-purple', 
             'theme-green', 'theme-red'
         );
         document.body.classList.add(`theme-${theme}`);
         
-        // Update CSS variables
         this.updateCSSVariables(theme);
-        
-        // Store theme in data attribute for CSS
         document.documentElement.setAttribute('data-theme', theme);
         
-        // Update theme stat
         const themeStat = document.getElementById('currentTheme');
         if (themeStat) {
             const themeNames = {
@@ -210,7 +173,6 @@ class SettingsManager {
             themeStat.textContent = themeNames[theme] || 'Dark';
         }
         
-        // Dispatch theme change event
         window.dispatchEvent(new CustomEvent('themeChanged', { 
             detail: { theme: theme } 
         }));
@@ -263,7 +225,6 @@ class SettingsManager {
 
     applyAnimations() {
         const enableAnimations = this.settings.enableAnimations;
-        
         if (enableAnimations) {
             document.body.classList.remove('no-animations');
         } else {
@@ -281,9 +242,6 @@ class SettingsManager {
 
     applyGamesCounter(force = false) {
         const showGamesCounter = this.settings.showGamesCounter;
-        console.log('Applying games counter setting:', showGamesCounter, 'force:', force);
-        
-        // Find ALL games counters on the page
         const gamesCounters = document.querySelectorAll('#gamesCounter, .games-counter, [data-games-counter]');
         
         gamesCounters.forEach(counter => {
@@ -298,7 +256,6 @@ class SettingsManager {
             }
         });
         
-        // Also update the games count in stats
         this.updateStats();
     }
 
@@ -308,7 +265,6 @@ class SettingsManager {
         
         document.title = title;
         
-        // Update favicon
         let link = document.querySelector("link[rel~='icon']");
         if (!link) {
             link = document.createElement('link');
@@ -317,7 +273,6 @@ class SettingsManager {
         }
         link.href = icon;
         
-        // Update cloak stat
         const cloakStat = document.getElementById('currentCloak');
         if (cloakStat) {
             cloakStat.textContent = this.settings.cloakMethod === 'none' ? 'None' : 
@@ -329,8 +284,6 @@ class SettingsManager {
     handleAnnouncementSetting() {
         if (!this.settings.announcementEnabled) {
             sessionStorage.removeItem('announcement_shown');
-            
-            // Hide any visible announcement
             const announcementModal = document.getElementById('announcementModal');
             if (announcementModal) {
                 announcementModal.style.display = 'none';
@@ -339,7 +292,6 @@ class SettingsManager {
     }
 
     updateActiveCloakButton() {
-        // Update active state on cloak buttons
         document.querySelectorAll('.cloak-action-btn').forEach(btn => {
             btn.classList.remove('active');
             if (btn.dataset.cloak === this.settings.cloakMethod) {
@@ -349,7 +301,6 @@ class SettingsManager {
     }
 
     setupUI() {
-        // Update theme selectors
         document.querySelectorAll('.theme-selector').forEach(card => {
             card.classList.remove('active');
             if (card.dataset.theme === this.settings.theme) {
@@ -357,27 +308,19 @@ class SettingsManager {
             }
         });
         
-        // Update ALL toggle switches - FIXED
         this.updateAllToggleSwitches();
         
-        // Update inputs
         const titleInput = document.getElementById('tabTitleInput');
         const iconInput = document.getElementById('tabIconInput');
         
         if (titleInput) titleInput.value = this.settings.customTitle || '';
         if (iconInput) iconInput.value = this.settings.customIcon || '';
         
-        // Setup tab cloak presets
         this.setupTabCloakPresets();
-        
-        // Update active cloak button
         this.updateActiveCloakButton();
     }
 
     updateAllToggleSwitches() {
-        console.log('Updating toggle switches...');
-        
-        // List of all toggle switches and their IDs
         const toggleSwitches = [
             { id: 'autoBlobCloak', setting: 'autoBlobCloak' },
             { id: 'autoAboutBlankCloak', setting: 'autoAboutBlankCloak' },
@@ -391,7 +334,6 @@ class SettingsManager {
             const checkbox = document.getElementById(item.id);
             if (checkbox) {
                 checkbox.checked = this.settings[item.setting];
-                console.log(`Set ${item.id} to ${this.settings[item.setting]}`);
             }
         });
     }
@@ -414,11 +356,9 @@ class SettingsManager {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Update settings
                 this.updateSetting('customTitle', preset.title);
                 this.updateSetting('customIcon', preset.icon);
                 
-                // Update UI inputs
                 const titleInput = document.getElementById('tabTitleInput');
                 const iconInput = document.getElementById('tabIconInput');
                 if (titleInput) titleInput.value = preset.title;
@@ -436,7 +376,6 @@ class SettingsManager {
     }
 
     updateStats() {
-        // Update games count stat
         const gamesCountStat = document.getElementById('gamesCountStat');
         if (gamesCountStat) {
             try {
@@ -451,9 +390,6 @@ class SettingsManager {
     }
 
     setupEventListeners() {
-        console.log('Setting up event listeners...');
-        
-        // Theme selectors
         document.addEventListener('click', (e) => {
             const themeSelector = e.target.closest('.theme-selector');
             if (themeSelector) {
@@ -462,10 +398,8 @@ class SettingsManager {
             }
         });
         
-        // Setup toggle listeners
         this.setupToggleListeners();
         
-        // Quick Cloak BUTTONS (not dropdown)
         document.querySelectorAll('.cloak-action-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const method = btn.dataset.cloak;
@@ -482,7 +416,6 @@ class SettingsManager {
             });
         });
         
-        // Tab cloaking
         const setTitleBtn = document.getElementById('setTabTitle');
         if (setTitleBtn) {
             setTitleBtn.addEventListener('click', () => {
@@ -528,7 +461,6 @@ class SettingsManager {
             });
         }
         
-        // Action buttons
         const saveBtn = document.getElementById('saveSettings');
         if (saveBtn) {
             saveBtn.addEventListener('click', () => {
@@ -558,7 +490,6 @@ class SettingsManager {
             });
         }
         
-        // Enter key in text inputs
         document.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 if (e.target.id === 'tabTitleInput') {
@@ -571,9 +502,6 @@ class SettingsManager {
     }
     
     setupToggleListeners() {
-        console.log('Setting up toggle listeners...');
-        
-        // List of all toggle switches
         const toggleIds = [
             'autoBlobCloak',
             'autoAboutBlankCloak', 
@@ -586,27 +514,17 @@ class SettingsManager {
         toggleIds.forEach(id => {
             const checkbox = document.getElementById(id);
             if (checkbox) {
-                console.log(`Found toggle: ${id}`);
-                
-                // Remove any existing listeners first
                 const newCheckbox = checkbox.cloneNode(true);
                 checkbox.parentNode.replaceChild(newCheckbox, checkbox);
-                
-                // Get the new checkbox
                 const freshCheckbox = document.getElementById(id);
                 
-                // Add change event listener
                 freshCheckbox.addEventListener('change', (e) => {
-                    console.log(`${id} changed to:`, e.target.checked);
                     this.updateSetting(id, e.target.checked);
                 });
                 
-                // Also add click event for better mobile support
                 freshCheckbox.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent double triggering
+                    e.stopPropagation();
                 });
-            } else {
-                console.warn(`Toggle not found: ${id}`);
             }
         });
     }
@@ -619,7 +537,6 @@ class SettingsManager {
         statusEl.className = 'setting-status';
         statusEl.classList.add(type);
         
-        // Reset after 3 seconds
         clearTimeout(this.statusTimeout);
         this.statusTimeout = setTimeout(() => {
             statusEl.textContent = 'Settings will be saved automatically';
@@ -627,51 +544,34 @@ class SettingsManager {
         }, 3000);
     }
 
-    // ===== CLOAKING METHODS =====
-    
     checkCurrentCloak() {
-        // Check if we're already in a blob cloak
         if (window.location.protocol === 'blob:') {
             this.settings.cloakMethod = 'blob';
             this.cloakApplied = true;
-            console.log('Already in blob cloak');
         }
         
-        // Check if we're in an about:blank iframe
         if (window.location.href === 'about:blank' || 
             window.parent !== window || 
             window !== window.top) {
             this.settings.cloakMethod = 'about-blank';
             this.cloakApplied = true;
-            console.log('Already in about:blank cloak');
         }
     }
     
     autoCloak() {
-        // Prevent multiple cloak attempts
         if (this.cloakApplied) {
-            console.log('Cloak already applied, skipping auto cloak');
             return;
         }
         
-        // Check if we're on the main page (not in a cloak already)
         const isMainPage = window.location.protocol !== 'blob:' && 
                           window.location.href !== 'about:blank' &&
                           window === window.top;
         
         if (!isMainPage) {
-            console.log('Not on main page, skipping auto cloak');
             return;
         }
         
-        console.log('Checking auto cloak settings:', {
-            autoBlobCloak: this.settings.autoBlobCloak,
-            autoAboutBlankCloak: this.settings.autoAboutBlankCloak,
-            cloakApplied: this.cloakApplied
-        });
-        
         if (this.settings.autoBlobCloak && !this.cloakApplied) {
-            console.log('Applying auto blob cloak');
             this.cloakApplied = true;
             setTimeout(() => {
                 if (!this.cloakInterrupted) {
@@ -679,7 +579,6 @@ class SettingsManager {
                 }
             }, 1000);
         } else if (this.settings.autoAboutBlankCloak && !this.cloakApplied) {
-            console.log('Applying auto about:blank cloak');
             this.cloakApplied = true;
             setTimeout(() => {
                 if (!this.cloakInterrupted) {
@@ -690,11 +589,7 @@ class SettingsManager {
     }
 
     blobCloak() {
-        console.log('Applying blob cloak...');
-        
-        // Check if we're already cloaked
         if (window.location.protocol === 'blob:') {
-            console.log('Already in blob cloak, skipping');
             return;
         }
         
@@ -724,18 +619,15 @@ class SettingsManager {
             <body class="theme-${this.settings.theme}">
                 <iframe src="${currentUrl}" id="corrodeFrame"></iframe>
                 <script>
-                    // Mark that we're in a cloak
                     try {
                         localStorage.setItem('corrode_cloak_active', 'blob');
                         sessionStorage.setItem('corrode_in_cloak', 'true');
                     } catch(e) {}
                     
-                    // Hide from browser history
                     try {
                         window.history.replaceState(null, null, 'about:blank');
                     } catch(e) {}
                     
-                    // Prevent infinite loops
                     if (window.frameElement && window.parent !== window) {
                         console.log('Already in iframe, stopping');
                     }
@@ -752,7 +644,6 @@ class SettingsManager {
             this.saveSettings();
             this.cloakApplied = true;
             
-            // Navigate to blob URL
             window.location.href = blobUrl;
         } catch (error) {
             console.error('Blob cloak failed:', error);
@@ -762,22 +653,16 @@ class SettingsManager {
     }
 
     aboutBlankCloak() {
-        console.log('Applying about:blank cloak...');
-        
-        // Check if we're already in an iframe
         if (window !== window.top || window.frameElement) {
-            console.log('Already in iframe, skipping about:blank cloak');
             return;
         }
         
         const currentUrl = window.location.href;
         
         try {
-            // Create new window
             const newWindow = window.open('about:blank', '_blank', 'noopener,noreferrer');
             
             if (newWindow && !newWindow.closed) {
-                // Set up the cloaked page
                 newWindow.document.write(`
                     <!DOCTYPE html>
                     <html>
@@ -803,13 +688,11 @@ class SettingsManager {
                     <body class="theme-${this.settings.theme}">
                         <iframe src="${currentUrl}" id="corrodeFrame"></iframe>
                         <script>
-                            // Mark that we're in a cloak
                             try {
                                 localStorage.setItem('corrode_cloak_active', 'about-blank');
                                 sessionStorage.setItem('corrode_in_cloak', 'true');
                             } catch(e) {}
                             
-                            // Prevent parent window from reloading
                             try {
                                 if (window.opener) {
                                     window.opener.sessionStorage.setItem('corrode_cloak_complete', 'true');
@@ -821,15 +704,12 @@ class SettingsManager {
                 `);
                 newWindow.document.close();
                 
-                // Mark cloak as applied
                 this.settings.cloakMethod = 'about-blank';
                 this.saveSettings();
                 this.cloakApplied = true;
                 
-                // Store that we've completed the cloak
                 sessionStorage.setItem('corrode_cloak_complete', 'true');
                 
-                // Close original window after delay
                 setTimeout(() => {
                     if (!window.closed && newWindow && !newWindow.closed) {
                         try {
@@ -847,7 +727,6 @@ class SettingsManager {
             this.cloakApplied = false;
             this.showStatus('About:blank cloak failed (popup may be blocked)', 'error');
             
-            // Try blob cloak as fallback
             if (confirm('About:blank cloak failed. Try blob cloak instead?')) {
                 this.blobCloak();
             }
@@ -855,22 +734,16 @@ class SettingsManager {
     }
 
     removeCloak() {
-        console.log('Removing cloak...');
-        
-        // Clear cloak tracking
         this.cloakApplied = false;
         this.settings.cloakMethod = 'none';
         this.saveSettings();
         
-        // Clear session storage
         sessionStorage.removeItem('corrode_in_cloak');
         sessionStorage.removeItem('corrode_cloak_complete');
         localStorage.removeItem('corrode_cloak_active');
         
-        // Determine where to navigate
         let targetUrl = window.location.href;
         
-        // If we're in a blob URL, we need to get the original URL from the iframe
         if (window.location.protocol === 'blob:') {
             try {
                 const iframe = document.querySelector('iframe');
@@ -878,11 +751,9 @@ class SettingsManager {
                     targetUrl = iframe.src;
                 }
             } catch (e) {
-                // Can't access iframe src due to CORS
                 targetUrl = window.location.origin || 'index.html';
             }
         }
-        // If we're in about:blank, try to get the parent URL
         else if (window.location.href === 'about:blank' && window.opener) {
             try {
                 targetUrl = window.opener.location.href;
@@ -891,11 +762,9 @@ class SettingsManager {
             }
         }
         
-        // Navigate to remove cloak
         if (window === window.top) {
             window.location.href = targetUrl;
         } else {
-            // We're in an iframe, reload parent
             window.top.location.reload();
         }
     }
@@ -910,37 +779,30 @@ class SettingsManager {
         }
     }
 
-    // Get current settings
     getSettings() {
         return { ...this.settings };
     }
 }
 
-// Initialize settings system
 let settingsManager;
 document.addEventListener('DOMContentLoaded', () => {
     settingsManager = new SettingsManager();
     window.settingsManager = settingsManager;
     
-    // Check if we're coming from a cloak
     const cloakComplete = sessionStorage.getItem('corrode_cloak_complete');
     if (cloakComplete === 'true') {
-        console.log('Cloak completed successfully');
         sessionStorage.removeItem('corrode_cloak_complete');
     }
     
-    // Also apply theme to any existing elements
     setTimeout(() => {
         if (settingsManager) {
             settingsManager.applyAllSettings();
-            // Force toggle update after DOM is ready
             if (settingsManager.setupToggleListeners) {
                 settingsManager.setupToggleListeners();
             }
         }
     }, 300);
     
-    // Additional toggle fix for slow loading
     window.addEventListener('load', () => {
         setTimeout(() => {
             if (settingsManager && settingsManager.setupToggleListeners) {

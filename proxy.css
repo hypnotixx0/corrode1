@@ -1,4 +1,4 @@
-/* Reset */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
 }
 
 :root {
-    /* Colors */
+
     --void: #000000;
     --abyss: #0a0a0a;
     --midnight: #111111;
@@ -27,16 +27,13 @@
     --frost: #eeeeee;
     --glacier: #ffffff;
     
-    /* Glass */
     --glass-dark: rgba(0, 0, 0, 0.2);
     --glass-border: rgba(255, 255, 255, 0.1);
     
-    /* Glow */
     --glow-subtle: rgba(255, 255, 255, 0.02);
     --glow-gentle: rgba(255, 255, 255, 0.04);
     --glow-visible: rgba(255, 255, 255, 0.08);
-    
-    /* Shadows */
+
     --shadow-light: rgba(0, 0, 0, 0.25);
     --shadow-medium: rgba(0, 0, 0, 0.4);
     --shadow-deep: rgba(0, 0, 0, 0.6);
@@ -49,7 +46,6 @@ body {
     overflow: hidden;
 }
 
-/* Background */
 .grid-backdrop {
     position: fixed;
     top: 0;
@@ -77,7 +73,6 @@ body {
     opacity: 0.2;
 }
 
-/* Main Layout */
 .proxy-interface {
     display: flex;
     flex-direction: column;
@@ -98,7 +93,6 @@ body {
     background: var(--void);
 }
 
-/* Navigation Panel */
 .navigation-panel {
     display: flex;
     align-items: center;
@@ -141,7 +135,6 @@ body {
     transform: none;
 }
 
-/* Search */
 .search-container {
     display: flex;
     align-items: center;
@@ -189,7 +182,6 @@ body {
     transform: translateY(-1px);
 }
 
-/* Toggle Buttons */
 .bookmark-toggle,
 .history-toggle {
     width: 50px;
@@ -218,7 +210,6 @@ body {
     border-color: var(--glow-visible);
 }
 
-/* Server Status */
 .server-status {
     padding: 0.5rem 1rem;
     background: var(--midnight);
@@ -231,7 +222,6 @@ body {
     gap: 0.5rem;
 }
 
-/* Panels */
 .history-panel,
 .bookmark-panel {
     position: fixed;
@@ -299,7 +289,6 @@ body {
     height: calc(100% - 70px);
 }
 
-/* List Items */
 .history-item {
     padding: 1rem;
     background: var(--midnight);
@@ -373,7 +362,6 @@ body {
     border-color: var(--stone);
 }
 
-/* Error Overlay */
 .error-overlay {
     position: fixed;
     top: 0;
@@ -435,12 +423,10 @@ body {
     border-color: var(--stone);
 }
 
-/* Hidden */
 .hidden {
     display: none;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .navigation-panel {
         padding: 0.5rem;

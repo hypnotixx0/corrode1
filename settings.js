@@ -1,4 +1,3 @@
-// Advanced Settings & Cloaking System
 class SettingsManager {
     constructor() {
         this.storageKey = 'corrode_settings';
@@ -28,10 +27,10 @@ class SettingsManager {
         this.applySettings();
         this.setupEventListeners();
         
-        // Check if cloak should be applied based on URL
+        
         this.checkUrlForCloak();
         
-        // Auto-cloak if enabled (with delay)
+        
         setTimeout(() => this.autoCloak(), 1500);
     }
 
@@ -61,43 +60,43 @@ class SettingsManager {
         this.saveSettings();
         this.applySettings();
         
-        // Special handling for cloak settings - only if changed
+        
         if ((key === 'autoBlobCloak' || key === 'autoAboutBlankCloak') && oldValue !== value) {
             this.autoCloak();
         }
         
-        // Special handling for announcement setting
+        
         if (key === 'announcementEnabled') {
             this.handleAnnouncementSetting();
         }
         
-        // Special handling for games counter
+        
         if (key === 'showGamesCounter') {
             this.applyGamesCounter();
         }
     }
 
     applySettings() {
-        // Apply theme
+        
         this.applyTheme(this.settings.theme);
         
-        // Apply tab cloaking
+        
         this.applyTabCloak();
         
-        // Apply animations
+        
         document.body.style.animation = this.settings.enableAnimations ? '' : 'none';
         
-        // Apply compact mode
+        
         if (this.settings.compactMode) {
             document.body.classList.add('compact-mode');
         } else {
             document.body.classList.remove('compact-mode');
         }
         
-        // Apply games counter - FIXED
+        
         this.applyGamesCounter();
         
-        // Handle announcement
+        
         this.handleAnnouncementSetting();
     }
     
@@ -117,16 +116,16 @@ class SettingsManager {
     }
 
     applyTheme(theme) {
-        // Remove all theme classes
+        
         document.body.classList.remove(
             'theme-dark', 'theme-blue', 'theme-purple', 
             'theme-green', 'theme-red'
         );
         
-        // Add selected theme
+        
         document.body.classList.add(`theme-${theme}`);
         
-        // Update CSS variables based on theme
+        
         this.updateThemeVariables(theme);
     }
 
@@ -183,7 +182,7 @@ class SettingsManager {
         
         document.title = title;
         
-        // Update favicon
+        
         let link = document.querySelector("link[rel~='icon']");
         if (!link) {
             link = document.createElement('link');
@@ -194,23 +193,23 @@ class SettingsManager {
     }
 
     handleAnnouncementSetting() {
-        // If announcement is disabled, hide it immediately
+        
         if (!this.settings.announcementEnabled) {
             const announcementModal = document.getElementById('announcementModal');
             if (announcementModal) {
                 announcementModal.style.display = 'none';
             }
-            // Also clear the session storage so it doesn't come back
+            
             sessionStorage.removeItem('announcement_shown');
         }
     }
 
     setupEventListeners() {
-        // Settings modal will be handled by UI class
+        
     }
     
     checkUrlForCloak() {
-        // Check if URL contains parameters that should trigger cloaking
+        
         const urlParams = new URLSearchParams(window.location.search);
         const shouldCloak = urlParams.get('cloak');
         const cloakType = urlParams.get('cloakType');
@@ -224,16 +223,16 @@ class SettingsManager {
         }
     }
 
-    // ===== CLOAKING METHODS =====
+    
     
     autoCloak() {
-        // Prevent multiple cloak attempts
+        
         if (this.cloakApplied) {
             console.log('Cloak already applied, skipping auto cloak');
             return;
         }
         
-        // Check if we're already in a cloak
+        
         if (window.location.protocol === 'blob:' || window.location.href === 'about:blank') {
             this.cloakApplied = true;
             return;
@@ -255,7 +254,7 @@ class SettingsManager {
     }
 
     blobCloak() {
-        // Check if already cloaked
+        
         if (window.location.protocol === 'blob:') {
             return;
         }
@@ -279,12 +278,12 @@ class SettingsManager {
             <body>
                 <iframe src="${currentUrl}" id="corrodeFrame"></iframe>
                 <script>
-                    // Mark cloak as active
+                    
                     try {
                         sessionStorage.setItem('corrode_in_cloak', 'true');
                     } catch(e) {}
                     
-                    // Hide from browser history
+                    
                     try {
                         window.history.replaceState(null, null, 'about:blank');
                     } catch(e) {}
@@ -308,7 +307,7 @@ class SettingsManager {
     }
 
     aboutBlankCloak() {
-        // Check if already in iframe
+        
         if (window !== window.top) {
             return;
         }
@@ -316,7 +315,7 @@ class SettingsManager {
         const currentUrl = window.location.href;
         
         try {
-            // Create new window
+            
             const newWindow = window.open('about:blank', '_blank', 'noopener,noreferrer');
             
             if (newWindow && !newWindow.closed) {
@@ -338,7 +337,7 @@ class SettingsManager {
                     <body>
                         <iframe src="${currentUrl}" id="corrodeFrame"></iframe>
                         <script>
-                            // Mark cloak as complete
+                            
                             try {
                                 sessionStorage.setItem('corrode_cloak_complete', 'true');
                             } catch(e) {}
@@ -352,10 +351,10 @@ class SettingsManager {
                 this.saveSettings();
                 this.cloakApplied = true;
                 
-                // Store that cloak is complete
+                
                 sessionStorage.setItem('corrode_cloak_complete', 'true');
                 
-                // Close original window
+                
                 setTimeout(() => {
                     try {
                         window.close();
@@ -368,7 +367,7 @@ class SettingsManager {
             console.error('About:blank cloak failed:', error);
             this.cloakApplied = false;
             
-            // Fallback to blob cloak
+            
             if (confirm('About:blank failed. Try blob cloak?')) {
                 this.blobCloak();
             }
@@ -380,11 +379,11 @@ class SettingsManager {
         this.settings.cloakMethod = 'none';
         this.saveSettings();
         
-        // Clear session storage
+        
         sessionStorage.removeItem('corrode_in_cloak');
         sessionStorage.removeItem('corrode_cloak_complete');
         
-        // Determine target URL
+        
         let targetUrl = window.location.href;
         
         if (window.location.protocol === 'blob:') {
@@ -404,7 +403,7 @@ class SettingsManager {
             }
         }
         
-        // Navigate
+        
         if (window === window.top) {
             window.location.href = targetUrl;
         } else {
@@ -412,7 +411,7 @@ class SettingsManager {
         }
     }
 
-    // Quick cloak toggle
+    
     quickCloak(method) {
         if (method === 'blob') {
             this.blobCloak();
@@ -423,7 +422,7 @@ class SettingsManager {
         }
     }
 
-    // Tab cloaking functions
+    
     setTabTitle(title) {
         this.updateSetting('customTitle', title);
         this.applyTabCloak();
@@ -440,13 +439,13 @@ class SettingsManager {
         this.applyTabCloak();
     }
 
-    // Get current settings
+    
     getSettings() {
         return { ...this.settings };
     }
 }
 
-// Settings UI Manager
+
 class SettingsUI {
     constructor(settingsManager) {
         this.settingsManager = settingsManager;
@@ -461,7 +460,7 @@ class SettingsUI {
     }
 
     createModal() {
-        // Create modal HTML
+        
         const modalHTML = `
             <div class="settings-modal" id="settingsModal">
                 <div class="settings-content">
@@ -622,31 +621,31 @@ class SettingsUI {
             </div>
         `;
         
-        // Add to body
+        
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         this.modal = document.getElementById('settingsModal');
         
-        // Load current settings into UI
+        
         this.loadSettingsToUI();
     }
 
     updateFooterSettingsButton() {
-        // Find the footer cluster and replace one item with settings
+        
         const footerCluster = document.querySelector('.footer-cluster');
         if (footerCluster) {
-            // Remove existing settings button if present
+            
             const existingSettings = footerCluster.querySelector('.settings-quick-btn');
             if (existingSettings) {
                 existingSettings.remove();
             }
             
-            // Replace the 5th item (index 4) with settings button
+            
             const links = footerCluster.querySelectorAll('.footer-link');
             if (links.length >= 5) {
                 links[4].remove();
             }
             
-            // Add settings button
+            
             const settingsBtn = document.createElement('a');
             settingsBtn.className = 'footer-link settings-quick-btn';
             settingsBtn.title = 'Settings';
@@ -664,7 +663,7 @@ class SettingsUI {
     loadSettingsToUI() {
         const settings = this.settingsManager.getSettings();
         
-        // Theme picker
+        
         document.querySelectorAll('.color-option').forEach(option => {
             option.classList.remove('active');
             if (option.dataset.theme === settings.theme) {
@@ -672,7 +671,7 @@ class SettingsUI {
             }
         });
         
-        // Toggle switches
+        
         document.getElementById('autoBlobCloak').checked = settings.autoBlobCloak;
         document.getElementById('autoAboutBlankCloak').checked = settings.autoAboutBlankCloak;
         document.getElementById('enableAnimations').checked = settings.enableAnimations;
@@ -680,16 +679,16 @@ class SettingsUI {
         document.getElementById('showGamesCounter').checked = settings.showGamesCounter;
         document.getElementById('announcementEnabled').checked = settings.announcementEnabled;
         
-        // Quick cloak select
+        
         document.getElementById('quickCloakSelect').value = settings.cloakMethod;
         
-        // Tab cloak inputs
+        
         document.getElementById('tabTitleInput').value = settings.customTitle;
         document.getElementById('tabIconInput').value = settings.customIcon;
     }
 
     saveSettingsFromUI() {
-        // Get values from UI
+        
         const settings = {
             theme: document.querySelector('.color-option.active')?.dataset.theme || 'dark',
             autoBlobCloak: document.getElementById('autoBlobCloak').checked,
@@ -701,24 +700,24 @@ class SettingsUI {
             cloakMethod: document.getElementById('quickCloakSelect').value
         };
         
-        // Apply settings
+        
         Object.entries(settings).forEach(([key, value]) => {
             this.settingsManager.updateSetting(key, value);
         });
     }
 
     setupEventListeners() {
-        // Close button
+        
         document.getElementById('settingsClose').addEventListener('click', () => this.hide());
         
-        // Modal background click
+        
         this.modal.addEventListener('click', (e) => {
             if (e.target === this.modal) {
                 this.hide();
             }
         });
         
-        // Theme picker
+        
         document.querySelectorAll('.color-option').forEach(option => {
             option.addEventListener('click', () => {
                 document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
@@ -727,7 +726,7 @@ class SettingsUI {
             });
         });
         
-        // Apply Quick Cloak
+        
         document.getElementById('applyQuickCloak').addEventListener('click', () => {
             const method = document.getElementById('quickCloakSelect').value;
             if (method !== 'none') {
@@ -741,7 +740,7 @@ class SettingsUI {
             }
         });
         
-        // Tab Cloaking
+        
         document.getElementById('setTabTitle').addEventListener('click', () => {
             const title = document.getElementById('tabTitleInput').value.trim();
             if (title) {
@@ -765,7 +764,7 @@ class SettingsUI {
             alert('Tab cloak reset!');
         });
         
-        // Save/Apply buttons
+        
         document.getElementById('saveSettings').addEventListener('click', () => {
             this.saveSettingsFromUI();
             this.hide();
@@ -786,27 +785,27 @@ class SettingsUI {
             }
         });
         
-        // Keyboard shortcut for settings (Ctrl+, or Cmd+,)
+        
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === ',') {
                 e.preventDefault();
                 this.show();
             }
             
-            // Escape to close settings
+            
             if (e.key === 'Escape' && this.modal.style.display === 'flex') {
                 this.hide();
             }
         });
         
-        // Toggle switch listeners
+        
         this.setupToggleListeners();
     }
     
     setupToggleListeners() {
         console.log('Setting up toggle listeners...');
         
-        // List of all toggle switches
+        
         const toggleIds = [
             'autoBlobCloak',
             'autoAboutBlankCloak', 
@@ -821,22 +820,22 @@ class SettingsUI {
             if (checkbox) {
                 console.log(`Found toggle: ${id}`);
                 
-                // Remove any existing listeners first
+                
                 const newCheckbox = checkbox.cloneNode(true);
                 checkbox.parentNode.replaceChild(newCheckbox, checkbox);
                 
-                // Get the new checkbox
+                
                 const freshCheckbox = document.getElementById(id);
                 
-                // Add change event listener
+                
                 freshCheckbox.addEventListener('change', (e) => {
                     console.log(`${id} changed to:`, e.target.checked);
                     this.settingsManager.updateSetting(id, e.target.checked);
                 });
                 
-                // Also add click event for better mobile support
+                
                 freshCheckbox.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent double triggering
+                    e.stopPropagation(); 
                 });
             } else {
                 console.warn(`Toggle not found: ${id}`);
@@ -856,7 +855,7 @@ class SettingsUI {
     }
 }
 
-// Initialize settings system
+
 let settingsManager, settingsUI;
 document.addEventListener('DOMContentLoaded', () => {
     settingsManager = new SettingsManager();
@@ -864,10 +863,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.settingsManager = settingsManager;
     window.settingsUI = settingsUI;
     
-    // Apply settings to current page
+    
     settingsManager.applySettings();
     
-    // Force toggle update after DOM is ready
+    
     setTimeout(() => {
         if (settingsUI && settingsUI.setupToggleListeners) {
             settingsUI.setupToggleListeners();

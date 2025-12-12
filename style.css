@@ -6,7 +6,7 @@
 }
 
 :root {
-    /* Monochrome colors */
+    
     --void: #000000;
     --abyss: #0a0a0a;
     --midnight: #111111;
@@ -26,17 +26,17 @@
     --frost: #eeeeee;
     --glacier: #ffffff;
     
-    /* Glass effects */
+    
     --glass-dark: rgba(0, 0, 0, 0.2);
     --glass-light: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
     
-    /* Glow effects */
+    
     --glow-subtle: rgba(255, 255, 255, 0.02);
     --glow-gentle: rgba(255, 255, 255, 0.04);
     --glow-visible: rgba(255, 255, 255, 0.08);
     
-    /* Shadows */
+    
     --shadow-light: rgba(0, 0, 0, 0.25);
     --shadow-medium: rgba(0, 0, 0, 0.4);
     --shadow-deep: rgba(0, 0, 0, 0.6);
@@ -49,7 +49,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Grid Background */
+
 .grid-canvas {
     position: fixed;
     top: 0;
@@ -65,7 +65,7 @@ body {
     z-index: -2;
 }
 
-/* Glow Effect */
+
 .luminous-aura {
     position: fixed;
     top: 50%;
@@ -84,7 +84,7 @@ body {
     opacity: 0.3;
 }
 
-/* Home Page */
+
 .home-page {
     display: flex;
     flex-direction: column;
@@ -103,7 +103,7 @@ body {
     z-index: 1;
 }
 
-/* Emblem */
+
 .emblem {
     display: flex;
     flex-direction: column;
@@ -148,7 +148,7 @@ body {
     text-align: center;
 }
 
-/* Search Module */
+
 .search-module {
     width: 100%;
     max-width: 800px;
@@ -227,7 +227,7 @@ body {
     color: var(--haze);
 }
 
-/* Tile Collection */
+
 .tile-collection {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -317,7 +317,7 @@ body {
     border-color: var(--stone);
 }
 
-/* Footer */
+
 .footer-cluster {
     position: fixed;
     bottom: 2.5rem;
@@ -346,12 +346,12 @@ body {
     transform: translateY(-2px);
 }
 
-/* Hidden class */
+
 .hidden {
     display: none;
 }
 
-/* Loading Animation - FIXED with unique name */
+
 .loading {
     display: inline-block;
     width: 20px;
@@ -366,7 +366,7 @@ body {
     to { transform: rotate(360deg); }
 }
 
-/* Announcement Modal */
+
 .announcement-modal {
     position: fixed;
     top: 0;
@@ -479,7 +479,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* Games Counter */
+
 .games-counter {
     position: fixed;
     bottom: 2.5rem;
@@ -501,7 +501,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Footer Cluster Update */
+
 .footer-cluster {
     position: fixed;
     bottom: 2.5rem;
@@ -517,10 +517,10 @@ body {
                 inset 0 1px 0 var(--glow-subtle);
 }
 
-/* Add to the end of style.css */
-/* Theme Application to All Pages */
+
+
 body.theme-dark {
-    /* Already the default, but ensure consistency */
+    
 }
 
 body.theme-blue .grid-canvas {
@@ -547,7 +547,7 @@ body.theme-red .grid-canvas {
         linear-gradient(90deg, #2a0a0a 1px, transparent 1px);
 }
 
-/* Theme-specific glow effects */
+
 body.theme-blue .luminous-aura {
     background: radial-gradient(
         circle at center,
@@ -580,7 +580,7 @@ body.theme-red .luminous-aura {
     );
 }
 
-/* Apply theme to announcement modal */
+
 .announcement-modal.theme-blue {
     background: rgba(0, 12, 26, 0.9);
 }
@@ -597,12 +597,12 @@ body.theme-red .luminous-aura {
     background: rgba(26, 0, 0, 0.9);
 }
 
-/* Apply theme to all containers */
+
 .central-container.theme-blue {
     background: transparent;
 }
 
-/* Ensure proxy page gets themes */
+
 .proxy-interface.theme-blue {
     background: #000c1a;
 }
@@ -619,7 +619,7 @@ body.theme-red .luminous-aura {
     background: #1a0000;
 }
 
-/* Animation disable support */
+
 .no-animations * {
     animation: none !important;
     transition: none !important;
@@ -637,7 +637,7 @@ body.theme-red .luminous-aura {
     transform: none !important;
 }
 
-/* Compact mode base styles */
+
 .compact-mode .tile-collection {
     gap: 1rem;
 }
@@ -673,7 +673,7 @@ body.theme-red .luminous-aura {
     font-size: 2.8rem;
 }
 
-/* Ensure games page gets compact mode */
+
 .compact-mode .games-grid {
     gap: 1.5rem;
 }
@@ -686,7 +686,7 @@ body.theme-red .luminous-aura {
     font-size: 1rem;
 }
 
-/* Fix for theme application in iframes */
+
 iframe {
     background: var(--void) !important;
 }

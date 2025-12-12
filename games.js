@@ -1,16 +1,15 @@
-// External Games Manager for gn-math games with Local Execution
 class ExternalGamesManager {
     constructor() {
         this.zones = [];
         this.featuredZones = [];
         this.zonesurls = [
-            "https://cdn.jsdelivr.net/%67%68/%67%6e%2d%6d%61%74%68/%61%73%73%65%74%73@%6d%61%69%6e/%7a%6f%6e%65%73%2e%6a%73%6f%6e",
-            "https://cdn.jsdelivr.net/gh/gn-math/assets@latest/zones.json",
-            "https://cdn.jsdelivr.net/gh/gn-math/assets@master/zones.json",
-            "https://cdn.jsdelivr.net/gh/gn-math/assets/zones.json"
+            "https:
+            "https:
+            "https:
+            "https:
         ];
-        this.coverURL = "https://cdn.jsdelivr.net/gh/gn-math/covers@main";
-        this.htmlURL = "https://cdn.jsdelivr.net/gh/gn-math/html@main";
+        this.coverURL = "https:
+        this.htmlURL = "https:
         this.currentZonesURL = this.zonesurls[0];
         this.gameCache = new Map();
         this.totalGamesCount = 0;
@@ -20,15 +19,15 @@ class ExternalGamesManager {
         try {
             console.log('Loading games from gn-math...');
             
-            // Get latest commit SHA
+            
             let sha;
             try {
-                const shareponse = await fetch("https://api.github.com/repos/gn-math/assets/commits?t=" + Date.now());
+                const shareponse = await fetch("https:
                 if (shareponse && shareponse.status === 200) {
                     const shajson = await shareponse.json();
                     sha = shajson[0]?.['sha'];
                     if (sha) {
-                        this.currentZonesURL = `https://cdn.jsdelivr.net/gh/gn-math/assets@${sha}/zones.json`;
+                        this.currentZonesURL = `https:
                         console.log('Using latest commit:', sha);
                     }
                 }
@@ -36,29 +35,29 @@ class ExternalGamesManager {
                 this.currentZonesURL = this.zonesurls[Math.floor(Math.random() * this.zonesurls.length)];
             }
 
-            // Fetch games data
+            
             const response = await fetch(this.currentZonesURL + "?t=" + Date.now());
             const json = await response.json();
             
             console.log('Raw game data loaded:', json.length, 'games');
-            this.totalGamesCount = json.length; // Store total count
+            this.totalGamesCount = json.length; 
             
-            // Process games data - FILTER OUT UNWANTED GAMES
+            
             this.zones = json.filter(zone => {
-                // Remove Discord (ID 0)
+                
                 if (zone.id === 0) return false;
                 
-                // Remove "Comments" game
+                
                 const name = (zone.name || '').toLowerCase();
                 if (name.includes('comments') || name === 'comment') {
                     return false;
                 }
                 
-                // Remove AI and chatbot games
+                
                 const desc = (zone.description || '').toLowerCase();
                 const tags = zone.special || [];
                 
-                // Chatbot/AI keywords to filter
+                
                 const aiKeywords = [
                     'ai', 'chat', 'bot', 'gpt', 'llm', 'openai', 
                     'chatgpt', 'bard', 'claude', 'assistant',
@@ -66,17 +65,17 @@ class ExternalGamesManager {
                     'conversation', 'talk', 'message', 'dialog'
                 ];
                 
-                // Check if game is AI/chatbot related
+                
                 const isAIGame = aiKeywords.some(keyword => 
                     name.includes(keyword) || 
                     desc.includes(keyword) ||
                     tags.some(tag => tag.toLowerCase().includes(keyword))
                 );
                 
-                // Remove if it's an AI game
+                
                 return !isAIGame;
             }).map(zone => {
-                // Handle author
+                
                 let author = 'Unknown';
                 let authorLink = '#';
                 
@@ -88,7 +87,7 @@ class ExternalGamesManager {
                     authorLink = zone.author.link || '#';
                 }
                 
-                // Process URLs
+                
                 let gameUrl = '';
                 let type = 'local';
                 
@@ -100,7 +99,7 @@ class ExternalGamesManager {
                     type = 'local';
                 }
                 
-                // Process cover URL
+                
                 const coverUrl = zone.cover
                     .replace("{COVER_URL}", this.coverURL)
                     .replace("{HTML_URL}", this.htmlURL);
@@ -123,15 +122,15 @@ class ExternalGamesManager {
 
             console.log('Games after filtering:', this.zones.length, 'out of', this.totalGamesCount);
             
-            // Separate featured games
+            
             this.featuredZones = this.zones.filter(zone => zone.featured);
             console.log('Featured games:', this.featuredZones.length);
             
-            // Get categories
+            
             this.categories = this.extractCategories();
             console.log('Categories:', this.categories);
             
-            // Update games count in localStorage for home page
+            
             localStorage.setItem('corrode_total_games', this.zones.length);
             localStorage.setItem('corrode_available_games', this.zones.length);
             
@@ -182,7 +181,7 @@ class ExternalGamesManager {
         return [...featured, ...nonFeatured];
     }
 
-    // Download and extract game
+    
     async downloadGameCode(game) {
         try {
             const cacheKey = `game_${game.id}`;
@@ -192,13 +191,13 @@ class ExternalGamesManager {
 
             console.log('Downloading:', game.name);
             
-            // Fetch the HTML
+            
             const response = await fetch(game.url + "?t=" + Date.now());
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             
             const html = await response.text();
             
-            // Create blob URL
+            
             const blob = new Blob([html], { type: 'text/html' });
             const blobUrl = URL.createObjectURL(blob);
             
@@ -218,13 +217,13 @@ class ExternalGamesManager {
         }
     }
 
-    // Get total games count (for home page)
+    
     getTotalGamesCount() {
         return this.zones.length;
     }
 }
 
-// Games UI Manager
+
 class GamesUI {
     constructor() {
         this.gamesManager = new ExternalGamesManager();
@@ -324,7 +323,7 @@ class GamesUI {
             return;
         }
         
-        // Featured section
+        
         if (this.currentFilter === 'all' && !this.currentSearch) {
             const featuredGames = games.filter(game => game.featured);
             const nonFeaturedGames = games.filter(game => !game.featured);
@@ -337,7 +336,7 @@ class GamesUI {
             games = nonFeaturedGames;
         }
         
-        // Add games
+        
         games.forEach(game => {
             const card = this.createGameCard(game);
             this.grid.appendChild(card);
@@ -404,7 +403,7 @@ class GamesUI {
                 src="${game.cover}" 
                 alt="${game.name}"
                 loading="lazy"
-                onerror="this.src='https://placehold.co/400x300/1a1a1a/666666?text=${encodeURIComponent(game.name)}'"
+                onerror="this.src='https:
             >
             <div class="game-overlay">
                 <div class="game-info">
@@ -440,7 +439,7 @@ class GamesUI {
             return;
         }
         
-        // Show loading
+        
         if (window.gamePlayer && window.gamePlayer.show) {
             const loadingGame = {
                 name: game.name,
@@ -450,12 +449,12 @@ class GamesUI {
             };
             window.gamePlayer.show(loadingGame);
             
-            // Download game
+            
             try {
                 const gameCode = await this.gamesManager.downloadGameCode(game);
                 
                 if (gameCode && gameCode.blobUrl) {
-                    // Close and reopen with actual game
+                    
                     window.gamePlayer.close();
                     
                     setTimeout(() => {
@@ -477,7 +476,7 @@ class GamesUI {
                 window.gamePlayer.close();
             }
         } else {
-            // Fallback: direct download
+            
             alert(`Downloading ${game.name}...`);
             try {
                 const gameCode = await this.gamesManager.downloadGameCode(game);
@@ -502,7 +501,7 @@ class GamesUI {
             
             gamesCount.textContent = filteredGames;
             
-            // Also update the total for home page
+            
             localStorage.setItem('corrode_display_games', totalGames);
         }
     }
@@ -530,7 +529,7 @@ class GamesUI {
     }
 }
 
-// Global functions
+
 function filterGames(category) {
     gamesUI.filterGames(category);
 }
@@ -547,7 +546,7 @@ function addCustomGame() {
     gamesUI.addCustomGame();
 }
 
-// Initialize
+
 let gamesUI;
 document.addEventListener('DOMContentLoaded', () => {
     gamesUI = new GamesUI();

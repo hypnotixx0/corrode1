@@ -1,4 +1,4 @@
-/* game-player.css - UPDATED WITH THEME SUPPORT */
+
 .game-player-overlay {
     position: fixed;
     top: 0;
@@ -11,7 +11,7 @@
     flex-direction: column;
 }
 
-/* Apply theme classes to game player */
+
 .game-player-overlay.theme-dark {
     background: #000000;
 }
@@ -32,7 +32,7 @@
     background: #1a0000;
 }
 
-/* Game Content Area */
+
 .game-player-content {
     flex: 1;
     position: relative;
@@ -53,7 +53,7 @@
     background: var(--void);
 }
 
-/* Game Controls Bar - Theme Support */
+
 .game-controls-bar {
     display: flex;
     align-items: center;
@@ -66,7 +66,7 @@
     transition: all 0.3s ease;
 }
 
-/* Theme-specific control bar colors */
+
 .game-player-overlay.theme-blue .game-controls-bar {
     background: #0a1a2a;
     border-top-color: #223a4a;
@@ -113,7 +113,7 @@
     gap: 0.8rem;
 }
 
-/* Control Buttons - Theme Support */
+
 .game-control-btn {
     width: 48px;
     height: 48px;
@@ -146,7 +146,7 @@
     border-color: var(--glow-visible);
 }
 
-/* Game Status - Theme Support */
+
 .game-status-indicator {
     padding: 0.5rem 1rem;
     background: var(--midnight);
@@ -178,7 +178,7 @@
     background: rgba(231, 76, 60, 0.1);
 }
 
-/* FIXED: Only spin the icon, not the container */
+
 .game-status-indicator.loading .fa-sync {
     animation: game-status-icon-spin 1s linear infinite;
     display: inline-block;
@@ -189,7 +189,7 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Loading Overlay - Theme Support */
+
 .game-loading-overlay {
     position: absolute;
     top: 0;
@@ -204,7 +204,7 @@
     z-index: 10;
 }
 
-/* Loading animation for overlay */
+
 .game-loading-animation {
     width: 60px;
     height: 60px;
@@ -233,7 +233,7 @@
     transition: color 0.3s ease;
 }
 
-/* Error Overlay - Theme Support */
+
 .game-error-overlay {
     position: absolute;
     top: 0;
@@ -314,7 +314,7 @@
     transform: translateY(0);
 }
 
-/* Fullscreen UI Hide Animation */
+
 .game-controls-bar.ui-hidden {
     transform: translateY(100%);
     opacity: 0;
@@ -327,7 +327,7 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Compact mode support */
+
 .compact-mode .game-controls-bar {
     padding: 0.5rem 1rem;
     min-height: 60px;
@@ -348,7 +348,7 @@
     font-size: 0.8rem;
 }
 
-/* Animation disable support */
+
 .no-animations .game-loading-animation {
     animation: none;
 }
@@ -361,7 +361,7 @@
     transform: none;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .game-controls-bar {
         padding: 0.8rem 1rem;
@@ -398,7 +398,7 @@
     }
 }
 
-/* Dark theme enhancement */
+
 .game-player-overlay.theme-dark .game-control-btn:hover {
     background: #444444;
     border-color: #555555;
@@ -409,7 +409,7 @@
     border-color: #333333;
 }
 
-/* High contrast mode support */
+
 @media (prefers-contrast: high) {
     .game-control-btn {
         border-width: 2px;

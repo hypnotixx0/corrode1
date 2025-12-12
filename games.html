@@ -14,7 +14,6 @@
     <div class="luminous-aura"></div>
     
     <main class="central-container">
-        <!-- Centered Games Icon -->
         <div class="centered-icon-wrapper">
             <i class="fas fa-gamepad"></i>
         </div>
@@ -23,8 +22,7 @@
             <h1 class="games-title">External Games</h1>
             <p class="games-subtitle">Powered by gn-math • Click any game to play</p>
         </div>
-        
-        <!-- Games Counter -->
+
         <div class="games-counter" id="gamesCounter">
             <span class="games-counter-number" id="gamesCount">0</span> Games Available
         </div>
@@ -38,8 +36,7 @@
                 <i class="fas fa-home"></i>
             </div>
         </div>
-        
-        <!-- Quick Actions -->
+
         <div class="quick-actions">
             <button class="quick-action-btn" onclick="filterGames('all')">
                 <i class="fas fa-gamepad"></i> All Games
@@ -51,16 +48,12 @@
                 <i class="fas fa-compass"></i> Browse More
             </button>
         </div>
-        
-        <!-- Category Filters (Will be populated by JavaScript) -->
+
         <div class="games-controls">
             <button class="category-filter all active" onclick="filterGames('all')">All Games</button>
-            <!-- Categories will be added here -->
         </div>
-        
-        <!-- Games Grid -->
+
         <div class="games-grid" id="gamesGrid">
-            <!-- Games will load here -->
         </div>
         
         <footer class="footer-cluster">
@@ -69,14 +62,11 @@
             <a href="settings.html" class="footer-link" title="Settings"><i class="fas fa-cog"></i></a>
         </footer>
     </main>
-    
-    <!-- Load game player FIRST -->
+
     <script src="game-player.js"></script>
-    
-    <!-- Then load games.js -->
+
     <script src="games.js"></script>
-    
-    <!-- Debug and initialization script -->
+
     <script>
         console.log('Games page loaded - initializing...');
         

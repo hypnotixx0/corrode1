@@ -7,12 +7,12 @@ class NavigationManager {
         this.historyKey = 'corrode_history';
         this.bookmarkKey = 'corrode_bookmarks';
         
-        // Working Wisp servers
+        
         this.wispServers = [
-            'https://wisp.mercurywork.shop/',
-            'https://wisp.projectlana.pw/',
-            'https://wisp.varunj.repl.co/',
-            'https://wisp.varunbagal.repl.co/'
+            'https:
+            'https:
+            'https:
+            'https:
         ];
         
         this.currentServerIndex = 0;
@@ -20,15 +20,15 @@ class NavigationManager {
     }
 
     init() {
-        // Load history
+        
         this.loadHistory();
         this.updateInterface();
         this.updateBookmarkState();
         this.renderBookmarks();
         
-        // Setup fullscreen
+        
         this.setupFullscreen();
-        // Add Games button
+        
         this.addGamesButton();
     }
 
@@ -42,7 +42,7 @@ class NavigationManager {
             window.location.href = 'games.html';
         });
         
-        // Insert after refresh button
+        
         const refreshBtn = document.getElementById('refreshButton');
         refreshBtn.parentNode.insertBefore(btn, refreshBtn.nextSibling);
     }
@@ -57,14 +57,14 @@ class NavigationManager {
     }
 
     getProxiedUrl(url) {
-        // Format URL for Wisp
+        
         let targetUrl = url.trim();
         
-        if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+        if (!targetUrl.startsWith('http:
             if (targetUrl.includes(' ') || !targetUrl.includes('.')) {
-                targetUrl = 'https://www.google.com/search?q=' + encodeURIComponent(targetUrl);
+                targetUrl = 'https:
             } else {
-                targetUrl = 'https://' + targetUrl;
+                targetUrl = 'https:
             }
         }
         
@@ -81,10 +81,10 @@ class NavigationManager {
         console.log('Navigating to:', originalUrl);
         console.log('Using proxy:', proxiedUrl);
         
-        // Set iframe source
+        
         this.surface.src = proxiedUrl;
         
-        // Update history
+        
         this.stack = this.stack.slice(0, this.position + 1);
         this.stack.push(originalUrl);
         this.position = this.stack.length - 1;
@@ -98,11 +98,11 @@ class NavigationManager {
 
     formatUrl(url) {
         let formatted = url.trim();
-        if (!formatted.startsWith('http://') && !formatted.startsWith('https://')) {
+        if (!formatted.startsWith('http:
             if (formatted.includes(' ') || !formatted.includes('.')) {
-                return `https://www.google.com/search?q=${encodeURIComponent(formatted)}`;
+                return `https:
             } else {
-                return `https://${formatted}`;
+                return `https:
             }
         }
         return formatted;
@@ -193,7 +193,7 @@ class NavigationManager {
         if (existingIndex > -1) {
             bookmarks.splice(existingIndex, 1);
         } else {
-            const title = currentUrl.replace(/^https?:\/\//, '').split('/')[0];
+            const title = currentUrl.replace(/^https?:\/\
             bookmarks.push({
                 url: currentUrl,
                 title: title,
@@ -312,7 +312,7 @@ class NavigationManager {
         
         document.querySelector('.navigation-panel').appendChild(btn);
         
-        // Listen for fullscreen changes
+        
         document.addEventListener('fullscreenchange', this.updateFullscreenIcon.bind(this));
         document.addEventListener('webkitfullscreenchange', this.updateFullscreenIcon.bind(this));
         document.addEventListener('mozfullscreenchange', this.updateFullscreenIcon.bind(this));
@@ -326,7 +326,7 @@ class NavigationManager {
             !document.webkitFullscreenElement && 
             !document.mozFullScreenElement && 
             !document.msFullscreenElement) {
-            // Enter fullscreen
+            
             if (elem.requestFullscreen) {
                 elem.requestFullscreen();
             } else if (elem.webkitRequestFullscreen) {
@@ -337,7 +337,7 @@ class NavigationManager {
                 elem.msRequestFullscreen();
             }
         } else {
-            // Exit fullscreen
+            
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             } else if (document.webkitExitFullscreen) {
@@ -366,11 +366,11 @@ class NavigationManager {
     }
 }
 
-// Initialize when DOM loads
+
 document.addEventListener('DOMContentLoaded', () => {
     const manager = new NavigationManager();
     
-    // Setup event listeners
+    
     document.getElementById('homeButton').addEventListener('click', () => {
         window.location.href = 'index.html';
     });
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('forwardButton').addEventListener('click', () => manager.goForward());
     document.getElementById('refreshButton').addEventListener('click', () => manager.refresh());
     
-    // Search
+    
     const searchBar = document.getElementById('searchBar');
     const searchExecute = document.getElementById('searchExecute');
     
@@ -396,10 +396,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     searchExecute.addEventListener('click', executeSearch);
     
-    // Bookmarks
+    
     document.getElementById('bookmarkToggle').addEventListener('click', () => manager.toggleBookmark());
     
-    // History
+    
     document.getElementById('historyToggle').addEventListener('click', () => {
         manager.renderHistory();
         document.getElementById('historyPanel').classList.add('active');
@@ -417,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
         manager.clearHistory();
     });
     
-    // Check for initial navigation
+    
     const destination = sessionStorage.getItem('corrode_destination');
     const query = sessionStorage.getItem('corrode_query');
     
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
         manager.navigate(query);
         sessionStorage.removeItem('corrode_query');
     } else if (manager.stack.length === 0) {
-        // Default page
-        manager.navigate('https://google.com');
+        
+        manager.navigate('https:
     }
 });

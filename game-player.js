@@ -1,4 +1,4 @@
-// Game Player Controller with Full Screen UI Hide
+
 class GamePlayer {
     constructor() {
         this.overlay = null;
@@ -16,7 +16,7 @@ class GamePlayer {
     }
 
     createOverlay() {
-        // Create overlay element
+        
         this.overlay = document.createElement('div');
         this.overlay.className = 'game-player-overlay';
         this.overlay.style.display = 'none';
@@ -86,7 +86,7 @@ class GamePlayer {
     }
 
     setupControls() {
-        // Get control elements
+        
         this.backBtn = document.getElementById('gameBackBtn');
         this.refreshBtn = document.getElementById('gameRefreshBtn');
         this.fullscreenBtn = document.getElementById('gameFullscreenBtn');
@@ -102,17 +102,17 @@ class GamePlayer {
     }
 
     setupEventListeners() {
-        // Control button event listeners
+        
         this.backBtn.addEventListener('click', () => this.close());
         this.refreshBtn.addEventListener('click', () => this.refreshGame());
         this.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
         this.popoutBtn.addEventListener('click', () => this.openInNewTab());
         
-        // Error handling
+        
         this.retryBtn.addEventListener('click', () => this.retryGame());
         this.closeErrorBtn.addEventListener('click', () => this.hideError());
         
-        // Game frame events
+        
         this.gameFrame.addEventListener('load', () => {
             console.log('Game frame loaded');
             this.hideLoading();
@@ -130,13 +130,13 @@ class GamePlayer {
             this.showError('Failed to load game. The game file may be missing or corrupted.');
         });
         
-        // Fullscreen change events
+        
         document.addEventListener('fullscreenchange', () => this.handleFullscreenChange());
         document.addEventListener('webkitfullscreenchange', () => this.handleFullscreenChange());
         document.addEventListener('mozfullscreenchange', () => this.handleFullscreenChange());
         document.addEventListener('MSFullscreenChange', () => this.handleFullscreenChange());
         
-        // Keyboard shortcuts
+        
         document.addEventListener('keydown', (e) => {
             if (!this.isVisible()) return;
             
@@ -170,12 +170,12 @@ class GamePlayer {
             }
         });
         
-        // Show UI on mouse move in fullscreen
+        
         this.overlay.addEventListener('mousemove', (e) => {
             if (this.isFullscreen && this.uiHidden) {
                 this.showUI();
                 
-                // Hide UI again after 3 seconds
+                
                 clearTimeout(this.uiHideTimeout);
                 this.uiHideTimeout = setTimeout(() => {
                     if (this.isFullscreen && this.isVisible()) {
@@ -194,10 +194,10 @@ class GamePlayer {
         
         if (isFullscreen) {
             this.isFullscreen = true;
-            this.hideUI(); // Hide UI when entering fullscreen
+            this.hideUI(); 
         } else {
             this.isFullscreen = false;
-            this.showUI(); // Show UI when exiting fullscreen
+            this.showUI(); 
         }
         
         this.updateFullscreenIcon();
@@ -216,25 +216,25 @@ class GamePlayer {
         this.overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         
-        // Make sure UI is visible when starting
+        
         this.showUI();
         
-        // Update UI
+        
         this.gameNameDisplay.textContent = game.name;
         if (game.author) {
             this.gameAuthorDisplay.textContent = `by ${game.author}`;
             this.gameAuthorDisplay.style.display = 'block';
         }
         
-        // Show loading
+        
         this.showLoading();
         this.updateStatus('loading', 'Loading game...');
         
-        // Load game
+        
         console.log('Loading game URL:', game.localPath);
         this.gameFrame.src = game.localPath;
         
-        // Add timeout for loading
+        
         setTimeout(() => {
             if (this.loadingOverlay.style.display !== 'none') {
                 this.updateStatus('loading', 'Still loading...');
@@ -247,10 +247,10 @@ class GamePlayer {
         this.overlay.style.display = 'none';
         document.body.style.overflow = '';
         
-        // Clear iframe source
+        
         this.gameFrame.src = 'about:blank';
         
-        // Revoke blob URLs
+        
         if (this.currentGame && this.currentGame.localPath && this.currentGame.localPath.startsWith('blob:')) {
             try {
                 URL.revokeObjectURL(this.currentGame.localPath);
@@ -270,7 +270,7 @@ class GamePlayer {
         this.showLoading();
         this.updateStatus('loading', 'Refreshing...');
         
-        // Force reload
+        
         this.gameFrame.src = this.gameFrame.src;
     }
 
@@ -278,7 +278,7 @@ class GamePlayer {
         const container = this.overlay;
         
         if (!document.fullscreenElement) {
-            // Enter fullscreen
+            
             if (container.requestFullscreen) {
                 container.requestFullscreen();
             } else if (container.webkitRequestFullscreen) {
@@ -289,9 +289,9 @@ class GamePlayer {
                 container.msRequestFullscreen();
             }
             this.isFullscreen = true;
-            this.hideUI(); // Hide UI when entering fullscreen
+            this.hideUI(); 
         } else {
-            // Exit fullscreen
+            
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             } else if (document.webkitExitFullscreen) {
@@ -302,7 +302,7 @@ class GamePlayer {
                 document.msExitFullscreen();
             }
             this.isFullscreen = false;
-            this.showUI(); // Show UI when exiting
+            this.showUI(); 
         }
     }
 
@@ -403,10 +403,10 @@ class GamePlayer {
     }
 }
 
-// Global game player instance
+
 let gamePlayer;
 
-// Initialize game player
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded - initializing GamePlayer');
     gamePlayer = new GamePlayer();
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('GamePlayer initialized');
 });
 
-// Global function to launch game
+
 window.launchGame = function(game) {
     console.log('Global launchGame called with:', game);
     
@@ -435,13 +435,13 @@ window.launchGame = function(game) {
     gamePlayer.show(gameData);
 };
 
-// Test function
+
 window.testGamePlayer = function() {
     console.log('Testing game player...');
     const testGame = {
         name: 'Test Game',
         author: 'Test Author',
-        localPath: 'https://example.com',
+        localPath: 'https:
         type: 'test'
     };
     

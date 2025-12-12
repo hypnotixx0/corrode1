@@ -13,7 +13,6 @@
     <div class="luminous-aura"></div>
     
     <main class="central-container">
-        <!-- Settings Header -->
         <div class="settings-header">
             <div class="settings-title-section">
                 <div class="settings-icon-wrapper">
@@ -25,7 +24,6 @@
                 </div>
             </div>
             
-            <!-- Quick Stats -->
             <div class="settings-stats">
                 <div class="stat-item">
                     <i class="fas fa-palette"></i>
@@ -45,7 +43,6 @@
             </div>
         </div>
         
-        <!-- Quick Navigation Grid - 4 boxes side by side -->
         <div class="quick-nav-grid">
             <button class="nav-card" onclick="window.location.href='index.html'">
                 <div class="nav-icon">
@@ -88,9 +85,7 @@
             </button>
         </div>
         
-        <!-- Settings Container -->
         <div class="settings-container">
-            <!-- Cloaking Section - AT THE TOP -->
             <div class="settings-section">
                 <h2 class="section-title">
                     <i class="fas fa-mask"></i>
@@ -98,7 +93,6 @@
                 </h2>
                 
                 <div class="settings-grid">
-                    <!-- Quick Cloak Buttons - NO DROPDOWN -->
                     <div class="setting-card action-setting full-width">
                         <div class="setting-icon">
                             <i class="fas fa-bolt"></i>
@@ -120,7 +114,6 @@
                         </div>
                     </div>
                     
-                    <!-- Auto Cloak Settings -->
                     <div class="setting-card toggle-setting">
                         <div class="setting-icon">
                             <i class="fas fa-shield-alt"></i>
@@ -151,7 +144,6 @@
                 </div>
             </div>
 
-            <!-- Tab Cloaking Section -->
             <div class="settings-section">
                 <h2 class="section-title">
                     <i class="fas fa-window-maximize"></i>
@@ -190,8 +182,7 @@
                             </button>
                         </div>
                     </div>
-                    
-                    <!-- Quick Presets - UNDER TAB CLOAKING -->
+
                     <div class="setting-card action-setting full-width">
                         <div class="setting-icon">
                             <i class="fas fa-bolt"></i>
@@ -202,7 +193,6 @@
                         </div>
                         <div class="cloak-presets-container">
                             <div class="cloak-presets" id="cloakPresets">
-                                <!-- Presets will be added by JavaScript -->
                             </div>
                         </div>
                     </div>
@@ -222,7 +212,6 @@
                 </div>
             </div>
 
-            <!-- Theme Section -->
             <div class="settings-section">
                 <h2 class="section-title">
                     <i class="fas fa-palette"></i>
@@ -239,7 +228,7 @@
                             <i class="fas fa-check"></i>
                         </div>
                     </div>
-                    
+
                     <div class="setting-card theme-selector" data-theme="blue">
                         <div class="theme-preview theme-blue"></div>
                         <div class="setting-info">
@@ -250,7 +239,7 @@
                             <i class="fas fa-check"></i>
                         </div>
                     </div>
-                    
+
                     <div class="setting-card theme-selector" data-theme="purple">
                         <div class="theme-preview theme-purple"></div>
                         <div class="setting-info">
@@ -261,7 +250,7 @@
                             <i class="fas fa-check"></i>
                         </div>
                     </div>
-                    
+
                     <div class="setting-card theme-selector" data-theme="green">
                         <div class="theme-preview theme-green"></div>
                         <div class="setting-info">
@@ -272,7 +261,7 @@
                             <i class="fas fa-check"></i>
                         </div>
                     </div>
-                    
+
                     <div class="setting-card theme-selector" data-theme="red">
                         <div class="theme-preview theme-red"></div>
                         <div class="setting-info">
@@ -286,13 +275,12 @@
                 </div>
             </div>
 
-            <!-- Interface Section -->
             <div class="settings-section">
                 <h2 class="section-title">
                     <i class="fas fa-desktop"></i>
                     Interface
                 </h2>
-                
+
                 <div class="settings-grid">
                     <div class="setting-card toggle-setting">
                         <div class="setting-icon">
@@ -307,7 +295,7 @@
                             <span class="toggle-slider"></span>
                         </div>
                     </div>
-                    
+
                     <div class="setting-card toggle-setting">
                         <div class="setting-icon">
                             <i class="fas fa-compress"></i>
@@ -321,7 +309,7 @@
                             <span class="toggle-slider"></span>
                         </div>
                     </div>
-                    
+
                     <div class="setting-card toggle-setting">
                         <div class="setting-icon">
                             <i class="fas fa-gamepad"></i>
@@ -335,7 +323,7 @@
                             <span class="toggle-slider"></span>
                         </div>
                     </div>
-                    
+
                     <div class="setting-card toggle-setting">
                         <div class="setting-icon">
                             <i class="fas fa-bullhorn"></i>
@@ -352,13 +340,12 @@
                 </div>
             </div>
 
-            <!-- Actions Section -->
             <div class="settings-section">
                 <h2 class="section-title">
                     <i class="fas fa-tools"></i>
                     Actions
                 </h2>
-                
+
                 <div class="action-buttons">
                     <button class="action-btn large" id="saveSettings">
                         <i class="fas fa-save"></i> Save Settings
@@ -370,14 +357,13 @@
                         <i class="fas fa-redo"></i> Reset to Defaults
                     </button>
                 </div>
-                
+
                 <div class="setting-status" id="settingStatus">
                     Settings will be saved automatically
                 </div>
             </div>
         </div>
-        
-        <!-- Footer -->
+
         <footer class="footer-cluster">
             <a href="index.html" class="footer-link" title="Home"><i class="fas fa-home"></i></a>
             <a href="games.html" class="footer-link" title="Games"><i class="fas fa-gamepad"></i></a>
@@ -385,10 +371,8 @@
             <a href="#" class="footer-link" title="Refresh" onclick="location.reload()"><i class="fas fa-redo"></i></a>
         </footer>
     </main>
-    
-    <!-- Load settings system -->
+
     <script src="settings-core.js"></script>
-    <!-- Load theme engine -->
     <script src="theme-engine.js"></script>
 </body>
 </html>
